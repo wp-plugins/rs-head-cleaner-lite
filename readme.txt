@@ -1,7 +1,7 @@
 === RS Head Cleaner Lite ===
 Contributors: RedSand
 Donate link: http://www.redsandmarketing.com/rs-head-cleaner-lite-donate/
-Tags: clean, cleaner, css, generator, head, head-cleaner, more, security, seo
+Tags: head-cleaner, clean, cleaner, css, generator, head, more, security, seo
 Requires at least: 3.0
 Tested up to: 3.9
 Stable tag: trunk
@@ -37,7 +37,7 @@ For more info and full documentation, visit the [RS Head Cleaner Lite plugin hom
 
 Version 1.1.0.1, *released 04/04/14* 
 
-* Minor code improvements.
+* Minor code improvements / bug fixes.
 
 Version 1.1.0.0, *released 03/26/14* 
 
