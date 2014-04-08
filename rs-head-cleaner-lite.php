@@ -36,7 +36,7 @@ My use of the end curly braces "}" is a little funky in that I indent them, I kn
 define( 'RSHCP_VERSION', '1.1.0.1' );
 define( 'RSHCP_REQUIRED_WP_VERSION', '3.0' );
 
-// Adds features, cleans up WP code, and eliminates need for multiple plugins
+// Adds features, cleans up WP code, and eliminates need for multiple plugins:
 	// - Hide WP Generator 			- Security
 	// - Removes CSS/JS Versions 	- Security, Speed, Code Validation
 	// - Fixes "More" link			- Fixes "More" link so you see the whole post when you click, not just the part after the "more"
