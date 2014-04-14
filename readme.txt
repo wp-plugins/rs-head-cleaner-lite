@@ -35,6 +35,10 @@ For more info and full documentation, visit the [RS Head Cleaner Lite plugin hom
 
 == Changelog ==
 
+Version 1.1.0.2, *released 04/13/14* 
+
+* Added additional security checks.
+
 Version 1.1.0.1, *released 04/04/14* 
 
 * Minor code improvements / bug fixes.
