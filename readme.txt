@@ -77,3 +77,5 @@ This new feature is integral to the plugin, so the caching isn't a feature you w
 = You do great work...can I hire you? =
 
 Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web-design/wordpress-consulting/ "WordPress Consulting") page for more information.
+
+
