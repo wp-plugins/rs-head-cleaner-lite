@@ -4,7 +4,7 @@ Plugin Name: RS Head Cleaner Lite
 Plugin URI: http://www.redsandmarketing.com/plugins/rs-head-cleaner/
 Description: This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience. It removes junk code from the HEAD & HTTP headers, hides the WP Version, Combines/Minifies/Caches CSS and JavaScript files, removes version numbers from CSS and JS links, and fixes the "Read more" link so it displays the entire post.
 Author: Scott Allen
-Version: 1.3
+Version: 1.3.1
 Author URI: http://www.redsandmarketing.com/
 License: GPLv2
 */
@@ -41,17 +41,38 @@ if ( !function_exists( 'add_action' ) ) {
 	die('ERROR: This plugin requires WordPress and will not function if called directly.');
 	}
 
-define( 'RSHCL_VERSION', '1.3' );
+define( 'RSHCL_VERSION', '1.3.1' );
 define( 'RSHCL_REQUIRED_WP_VERSION', '3.6' );
 
-if ( !defined( 'RSHCL_REMOVE_OPEN_SANS' ) ) { define( 'RSHCL_REMOVE_OPEN_SANS', false ); } // Change in wp-config.php
-// By default this feature is off, but if you don't need Open Sans and you want a faster site, add a line in your wp-config.php that says: "define( 'RSHCL_REMOVE_OPEN_SANS', true );"
+if ( !defined( 'RSHCL_DEBUG' ) ) 				{ define( 'RSHCL_DEBUG', false ); } // Do not change value unless developer asks you to - for debugging only. Change in wp-config.php.
+if ( !defined( 'RSHCL_PLUGIN_BASENAME' ) ) 		{ define( 'RSHCL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );	}
+if ( !defined( 'RSHCL_PLUGIN_FILE_BASENAME' ) ) { define( 'RSHCL_PLUGIN_FILE_BASENAME', trim( basename( __FILE__ ), '/' ) ); }
+if ( !defined( 'RSHCL_PLUGIN_NAME' ) ) 			{ define( 'RSHCL_PLUGIN_NAME', trim( dirname( RSHCL_PLUGIN_BASENAME ), '/' ) ); }
+
+if ( !defined( 'RSHC_REMOVE_OPEN_SANS' ) ) { define( 'RSHC_REMOVE_OPEN_SANS', false ); } // Change in wp-config.php
+// By default this feature is off, but if you don't need Open Sans and you want a faster site, add a line in your wp-config.php that says: "define( 'RSHC_REMOVE_OPEN_SANS', true );"
+// RSHC_REMOVE_OPEN_SANS is a shared constant with RSHCP.
 // Any of these can be changed in wp-config.php:
 if ( !defined( 'RSHCL_DIR_NAME' ) ) { define( 'RSHCL_DIR_NAME', 'rshcl-cache' ); }
 if ( !defined( 'RSHCL_JS_PATH' ) ) { define( 'RSHCL_JS_PATH', WP_CONTENT_DIR.'/'.RSHCL_DIR_NAME.'/js/' ); }
 if ( !defined( 'RSHCL_CSS_PATH' ) ) { define( 'RSHCL_CSS_PATH', WP_CONTENT_DIR.'/'.RSHCL_DIR_NAME.'/css/' ); }
 if ( !defined( 'RSHCL_JS_URL' ) ) { define( 'RSHCL_JS_URL', WP_CONTENT_URL.'/'.RSHCL_DIR_NAME.'/js/' ); }
 if ( !defined( 'RSHCL_CSS_URL' ) ) { define( 'RSHCL_CSS_URL', WP_CONTENT_URL.'/'.RSHCL_DIR_NAME.'/css/' ); }
+if ( !defined( 'RSMP_SERVER_ADDR' ) ) 			{ define( 'RSMP_SERVER_ADDR', rshcl_get_server_addr() ); }
+if ( !defined( 'RSMP_SERVER_NAME' ) ) 			{ define( 'RSMP_SERVER_NAME', rshcl_get_server_name() ); }
+if ( !defined( 'RSMP_SERVER_NAME_REV' ) ) 		{ define( 'RSMP_SERVER_NAME_REV', strrev( RSMP_SERVER_NAME ) ); }
+if ( !defined( 'RSMP_DEBUG_SERVER_NAME' ) ) 	{ define( 'RSMP_DEBUG_SERVER_NAME', '.redsandmarketing.com' ); }
+if ( !defined( 'RSMP_DEBUG_SERVER_NAME_REV' ) )	{ define( 'RSMP_DEBUG_SERVER_NAME_REV', strrev( RSMP_DEBUG_SERVER_NAME ) ); }
+/*
+if ( !defined( 'RSMP_WIN_SERVER' ) ) {
+	$rshcl_php_uname = @php_uname('s');
+	if ( preg_match( "~^(cyg|u)?win~i", $rshcl_php_uname) ) { define( 'RSMP_WIN_SERVER', 'Win' ); } else { define( 'RSMP_WIN_SERVER', 'NotWin' ); }
+	}
+*/
+
+if ( strpos( RSMP_SERVER_NAME_REV, RSMP_DEBUG_SERVER_NAME_REV ) !== 0 && RSMP_SERVER_ADDR != '127.0.0.1' && RSHCL_DEBUG != true ) {
+	error_reporting(0); // Prevents error display on production sites, but testing on 127.0.0.1 will display errors, or if debug mode turned on
+	}
 
 // Adds features, cleans up WP code, and eliminates need for multiple plugins:
 	// - Hide WP Generator 				- Security
@@ -116,7 +137,7 @@ function rshcl_defer_async_js( $url ) {
 //add_filter( 'clean_url', 'rshcl_defer_async_js', 9999, 1 );
 // Remove Open Sans to Speed Page Loading - Only for Admin area (default), if you change wp-config.php setting, will also work when logged in on any part of site
 function rshcl_remove_opensans() {
-	if ( is_admin() || RSHCL_REMOVE_OPEN_SANS != false ) {
+	if ( is_admin() || RSHC_REMOVE_OPEN_SANS != false ) {
 		wp_deregister_style( 'open-sans' );
 		wp_register_style( 'open-sans', false );
 		wp_enqueue_style( 'open-sans', '' );
@@ -372,7 +393,18 @@ function rshcl_inspect_styles() {
 	}
 // SPEED UP WORDPRESS - END
 
-// Admin Functions
+// Standard Functions - BEGIN
+function rshcl_get_server_addr() {
+	if ( !empty( $_SERVER['SERVER_ADDR'] ) ) { $server_addr = $_SERVER['SERVER_ADDR']; } else { $server_addr = getenv('SERVER_ADDR'); }
+	return $server_addr;
+	}
+function rshcl_get_server_name() {
+	if ( !empty( $_SERVER['SERVER_NAME'] ) ) { $server_name = strtolower( $_SERVER['SERVER_NAME'] ); } else { $server_name = strtolower( getenv('SERVER_NAME') ); }
+	return $server_name;
+	}
+// Standard Functions - END
+
+// Admin Functions - BEGIN
 register_activation_hook( __FILE__, 'rshcl_install_on_activation' );
 function rshcl_install_on_activation() {
 	$installed_ver = get_option('rs_head_cleaner_lite_version');
@@ -388,6 +420,30 @@ function rshcl_install_on_activation() {
 		wp_mkdir_p( $rshcl_css_dir );
 		}
 	}
+add_action( 'admin_init', 'rshcl_check_version' );
+function rshcl_check_version() {
+	global $wp_version;
+	$rshcl_wp_version = $wp_version;
+	if ( version_compare( $rshcl_wp_version, RSHCL_REQUIRED_WP_VERSION, '<' ) ) {
+		deactivate_plugins( RSHCL_PLUGIN_BASENAME );
+		$notice_text = sprintf( __( 'Plugin deactivated. WordPress Version %s required. Please upgrade WordPress to the latest version.', RSHCL_PLUGIN_NAME ), RSHCL_REQUIRED_WP_VERSION );
+		$new_admin_notice = array( 'style' => 'error', 'notice' => $notice_text );
+		update_option( 'rshcl_admin_notices', $new_admin_notice );
+		add_action( 'admin_notices', 'rshcl_admin_notices' );
+		return false;
+		}
+	add_action( 'admin_notices', 'rshcl_admin_notices' );
+	}
+function rshcl_admin_notices() {
+	$admin_notices = get_option('rshcl_admin_notices');
+	if ( !empty( $admin_notices ) ) {
+		$style 	= $admin_notices['style']; // 'error'  or 'updated'
+		$notice	= $admin_notices['notice'];
+		echo '<div class="'.$style.'"><p>'.$notice.'</p></div>';
+		}
+	delete_option('rshcl_admin_notices');
+	}
+// Admin Functions - END
 
 // PLUGIN - END
 ?>

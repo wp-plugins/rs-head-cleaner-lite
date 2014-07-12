@@ -1,7 +1,7 @@
 === RS Head Cleaner Lite ===
 Contributors: RedSand
 Donate link: http://www.redsandmarketing.com/rs-head-cleaner-lite-donate/
-Tags: cache, clean, cleaner, css, generator, head, head-cleaner, javascript, more, minify, security, seo
+Tags: cache, clean, cleaner, css, generator, head, head-cleaner, javascript, more, minify, performance, security, seo
 Requires at least: 3.6
 Tested up to: 3.9
 Stable tag: trunk
@@ -37,6 +37,11 @@ For a more thorough explanation of what the plugin does and why you need it, vis
 For more info and full documentation, visit the [RS Head Cleaner Lite plugin homepage](http://www.redsandmarketing.com/plugins/rs-head-cleaner/ "RS Head Cleaner Lite Plugin").
 
 == Changelog ==
+
+Version 1.3.1, *released 07/12/14*
+
+* Added additional security checks.
+* Fixed a minor bug.
 
 Version 1.3, *released 07/03/14*
 
@@ -77,5 +82,3 @@ This new feature is integral to the plugin, so the caching isn't a feature you w
 = You do great work...can I hire you? =
 
 Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web-design/wordpress-consulting/ "WordPress Consulting") page for more information.
-
-
