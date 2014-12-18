@@ -3,7 +3,7 @@ Contributors: RedSand
 Donate link: http://www.redsandmarketing.com/rs-head-cleaner-lite-donate/
 Tags: cache, clean, cleaner, css, generator, head, head-cleaner, javascript, more, minify, performance, security, seo
 Requires at least: 3.6
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 
 This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience.
@@ -29,14 +29,45 @@ For a more thorough explanation of what the plugin does and why you need it, vis
 == Installation ==
 
 = Installation Instructions =
-1. After downloading, unzip file and upload the enclosed `rs-head-cleaner-lite` directory to your WordPress plugins directory: `/wp-content/plugins/`.
-2. As always, **activate** the plugin on your WordPress plugins page.
-3. You are good to go...it's that easy.
+
+**Option 1:** Install the plugin directly through the WordPress Admin Dashboard (Recommended)
+
+1. Go to *Plugins* -> *Add New*.
+
+2. Type *RS Head Cleaner Lite* into the Search box, and click *Search Plugins*.
+
+3. When the results are displayed, click *Install Now*.
+
+4. When it says the plugin has successfully installed, click **Activate Plugin** to activate the plugin (or you can do this on the Plugins page).
+
+**Option 2:** Install .zip file through WordPress Admin Dashboard
+
+1. Go to *Plugins* -> *Add New* -> *Upload*.
+
+2. Click *Choose File* and find `rs-head-cleaner-lite.zip` on your computer's hard drive.
+
+3. Click *Install Now*.
+
+4. Click **Activate Plugin** to activate the plugin (or you can do this on the Plugins page).
+
+**Option 3:** Install .zip file through an FTP Client (Recommended for Advanced Users Only)
+
+1. After downloading, unzip file and use an FTP client to upload the enclosed `rs-head-cleaner-lite` directory to your WordPress plugins directory (usually `/wp-content/plugins/`) on your web server.
+
+2. Go to your Plugins page in the WordPress Admin Dashboard, and find this plugin in the list.
+
+3. Click **Activate** to activate the plugin.
 
 = More Info / Documentation =
 For more info and full documentation, visit the [RS Head Cleaner Lite plugin homepage](http://www.redsandmarketing.com/plugins/rs-head-cleaner/ "RS Head Cleaner Lite Plugin").
 
 == Changelog ==
+
+Version 1.3.2, *released 12/18/14*
+
+* Added additional security checks.
+* Various code improvements.
+* Fixed a bug that caused the plugin to attempt to cache web font files.
 
 Version 1.3.1, *released 07/12/14*
 
