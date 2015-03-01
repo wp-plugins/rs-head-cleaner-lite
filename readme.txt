@@ -10,11 +10,15 @@ This plugin cleans up a number of issues, doing the work of multiple plugins, im
 
 == Description == 
 
-This plugin cleans up a number of issues, doing the work of multiple plugins, improving efficiency, security, SEO, and user experience. It removes junk code from the HEAD & HTTP headers, combines/minifies/caches CSS & JavaScript files, hides the Generator/WordPress Version number, removes version numbers from CSS and JS links, and fixes the "Read more" link so it displays the entire post.
+This plugin cleans up a number of issues, doing the work of multiple plugins, improving efficiency, security, SEO, and user experience. It removes junk code from the document HEAD & HTTP headers, combines/minifies/caches CSS & JavaScript files, hides the Generator/WordPress Version number, removes version numbers from CSS and JS links, and fixes the "Read more" link so it displays the entire post.
+
+= Documentation / Tech Support =
+* Documentation: [Plugin Homepage](http://www.redsandmarketing.com/plugins/rs-head-cleaner/)
+* Tech Support: [WordPress Plugin Support](http://www.redsandmarketing.com/plugins/wordpress-plugin-support/)
 
 = Features =
 
-* **Removes the Generator/WordPress Version number** from the HEAD section for security reasons. You don't want your WordPress version being visible because hackers can use it to attack your site. Even if you keep your site up to date, it still could be vulnerable to zero-day exploits.
+* **Removes the Generator/WordPress Version number** from the document HEAD section for security reasons. You don't want your WordPress version being visible because hackers can use it to attack your site. Even if you keep your site up to date, it still could be vulnerable to zero-day exploits.
 * **Removes Version numbers from CSS and JS** in the HEAD for the same security reasons you hide WordPress version. Will also improve site loading speed because removing version numbers from the CSS & JS links will allow browsers to properly cache these files, as well as helping your site code to validate.
 * **Removes junk WordPress code** from the HEAD of your site: **RSD link**, **Windows Live Writer Manifest link**, **WordPress Shortlinks** (also removed from HTTP Headers), **Adjacent Posts links (REL = PREV/NEXT)** as all are unnecessary, hurt your SEO and clutter your site code.
 * **Combines, minifies, and caches CSS and JavaScript files** for even better speed improvements in page loading.
@@ -22,7 +26,9 @@ This plugin cleans up a number of issues, doing the work of multiple plugins, im
 
 Several of these features work together to improve page loading speed and will improve your Google PageSpeed score and Yahoo YSlow score. Do a before & after test with GTMetrix to see what I mean.
 
-Use this plugin instead of [RS Head Cleaner Plus](http://wordpress.org/plugins/rs-head-cleaner/ "RS Head Cleaner Plus") if you don't want to move JavaScript from the HEAD to your page footer. (Some themes, especially responsive themes that use JS libraries, need the JS to stay in the HEAD.) 
+Use this plugin instead of [RS Head Cleaner Plus](http://wordpress.org/plugins/rs-head-cleaner/ "RS Head Cleaner Plus") if you don't want to move JavaScript from the page HEAD to your page footer. (Some themes, especially responsive themes that use JS libraries, need the JS to stay in the HEAD.)
+
+*As with any JS/CSS minification & caching plugin, it's important to test, test, test.* Because of the type of plugin it is, this plugin may not work for every site out there, but that does not mean the plugin is broken. **If you have any issues, please submit a [support request](http://www.redsandmarketing.com/plugins/wordpress-plugin-support/) so we can look into it and make it as compatible as possible for everyone.**
 
 For a more thorough explanation of what the plugin does and why you need it, visit the [RS Head Cleaner Lite homepage](http://www.redsandmarketing.com/plugins/rs-head-cleaner/ "RS Head Cleaner Lite Plugin").
 
