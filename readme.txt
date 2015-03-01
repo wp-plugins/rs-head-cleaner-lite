@@ -61,44 +61,6 @@ For a more thorough explanation of what the plugin does and why you need it, vis
 = More Info / Documentation =
 For more info and full documentation, visit the [RS Head Cleaner Lite plugin homepage](http://www.redsandmarketing.com/plugins/rs-head-cleaner/ "RS Head Cleaner Lite Plugin").
 
-== Changelog ==
-
-Version 1.3.3, *released 01/19/15*
-
-* Fixed a minor bug.
-* Increased minimum required WordPress version to 3.7.
-
-Version 1.3.2, *released 12/18/14*
-
-* Added additional security checks.
-* Various code improvements.
-* Fixed a bug that caused the plugin to attempt to cache web font files.
-
-Version 1.3.1, *released 07/12/14*
-
-* Added additional security checks.
-* Fixed a minor bug.
-
-Version 1.3, *released 07/03/14*
-
-* Added the Combine/Minify/Cache CSS & JavaScript feature.
-
-Version 1.1.0.3, *released 04/28/14* 
-
-* Fixed a bug that caused an error message on certain server configurations.
-
-Version 1.1.0.2, *released 04/13/14* 
-
-* Added additional security checks.
-
-Version 1.1.0.1, *released 04/04/14* 
-
-* Minor code improvements / bug fixes.
-
-Version 1.1.0.0, *released 03/26/14* 
-
-* Added feature to remove version numbers from CSS and JS links in the HEAD.
-
 == Frequently Asked Questions ==
 
 = Where are the options? =
@@ -118,3 +80,69 @@ This new feature is integral to the plugin, so the caching isn't a feature you w
 = You do great work...can I hire you? =
 
 Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web-design/wordpress-consulting/ "WordPress Consulting") page for more information.
+
+== Changelog ==
+
+= 1.3.4 =
+*released 03/01/15*
+
+* Added an uninstall function that completely uninstalls the plugin and removes all cache files, options, data, and traces of its existence when it is deleted through the dashboard.
+* Added a minor JavaScript compatibility fix for Twenty Fourteen and similar themes.
+
+= 1.3.3 =
+*released 01/19/15*
+
+* Fixed a minor bug.
+* Increased minimum required WordPress version to 3.7.
+
+= 1.3.2 =
+*released 12/18/14*
+
+* Added additional security checks.
+* Various code improvements.
+* Fixed a bug that caused the plugin to attempt to cache web font files.
+
+= 1.3.1 =
+*released 07/12/14*
+
+* Added additional security checks.
+* Fixed a minor bug.
+
+= 1.3 =
+*released 07/03/14*
+
+* Added the Combine/Minify/Cache CSS & JavaScript feature.
+
+= 1.1.1 =
+*released 06/17/14*
+
+* Updated some features.
+
+= 1.1.0.3 =
+*released 04/28/14* 
+
+* Fixed a bug that caused an error message on certain server configurations.
+
+= 1.1.0.2 =
+*released 04/13/14* 
+
+* Added additional security checks.
+
+= 1.1.0.1 =
+*released 04/04/14* 
+
+* Minor code improvements / bug fixes.
+
+= 1.1 =
+*released 03/26/14* 
+
+* Added feature to remove version numbers from CSS and JS links in the HEAD.
+
+= 1.0 =
+*released 03/17/14*
+
+* Initial release.
+
+== Upgrade Notice ==
+= 1.3.4 =
+Added an uninstall function to clean up files and data upon deleting, and added a minor JavaScript compatibility fix. Please see Changelog for details.
