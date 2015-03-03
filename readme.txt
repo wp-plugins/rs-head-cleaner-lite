@@ -26,6 +26,8 @@ This plugin cleans up a number of issues, doing the work of multiple plugins, im
 
 Several of these features work together to improve page loading speed and will improve your Google PageSpeed score and Yahoo YSlow score. Do a before & after test with GTMetrix to see what I mean.
 
+The JavaScript & CSS cache files are cleared each time the plugin is deactivated manually through the dashboard (but not on automatic or bulk plugin upgrades). If you would like to manually clear the cache, simply deactivate and reactivate the plugin. Important: If you're using a caching plugin, when you do this, *be sure to clear your caching plugin's file cache as well to prevent issues from a cached page calling on now-missing JS & CSS files*. (For example, with WP Super Cache, go to the settings, and on the Content page, choose "Delete Cache". It will be similar with other caching plugins.)
+
 Use this plugin instead of [RS Head Cleaner Plus](http://wordpress.org/plugins/rs-head-cleaner/ "RS Head Cleaner Plus") if you don't want to move JavaScript from the page HEAD to your page footer. (Some themes, especially responsive themes that use JS libraries, need the JS to stay in the HEAD.)
 
 *As with any JS/CSS minification & caching plugin, it's important to test, test, test.* Because of the type of plugin it is, this plugin may not work for every site out there, but that does not mean the plugin is broken. **If you have any issues, please submit a [support request](http://www.redsandmarketing.com/plugins/wordpress-plugin-support/) so we can look into it and make it as compatible as possible for everyone.**
@@ -89,6 +91,12 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 
 == Changelog ==
 
+= 1.3.5 =
+*released 03/03/15*
+
+* Added a function that will clear the JavaScript & CSS cache files each time the plugin is deactivated manually through the dashboard (but not on automatic or bulk plugin upgrades). If you would like to manually clear the cache, simply deactivate and reactivate the plugin. (If you're using a page caching plugin, just be sure to also clear that plugin's cache as well at the same time to prevent related issues.)
+* Fixed a minor bug in the uninstall function.
+
 = 1.3.4 =
 *released 03/01/15*
 
@@ -125,22 +133,22 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Updated some features.
 
 = 1.1.0.3 =
-*released 04/28/14* 
+*released 04/28/14*
 
 * Fixed a bug that caused an error message on certain server configurations.
 
 = 1.1.0.2 =
-*released 04/13/14* 
+*released 04/13/14*
 
 * Added additional security checks.
 
 = 1.1.0.1 =
-*released 04/04/14* 
+*released 04/04/14*
 
 * Minor code improvements / bug fixes.
 
 = 1.1 =
-*released 03/26/14* 
+*released 03/26/14*
 
 * Added feature to remove version numbers from CSS and JS links in the HEAD.
 
@@ -150,5 +158,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.3.4 =
-Added an uninstall function to clean up files and data upon deleting, and added a minor JavaScript compatibility fix. Please see Changelog for details.
+= 1.3.5 =
+Added a function to clear the JS & CSS cache upon deactivating the plugin, and fixed a minor bug. Please see Changelog for details.
