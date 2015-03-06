@@ -4,7 +4,7 @@ Plugin Name: RS Head Cleaner Lite
 Plugin URI: http://www.redsandmarketing.com/plugins/rs-head-cleaner/
 Description: This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience. It removes junk code from the document HEAD & HTTP headers, hides the WP Version, Combines/Minifies/Caches CSS and JavaScript files, removes version numbers from CSS and JS links, and fixes the "Read more" link so it displays the entire post.
 Author: Scott Allen
-Version: 1.3.5
+Version: 1.3.6
 Author URI: http://www.redsandmarketing.com/
 Text Domain: rs-head-cleaner-lite
 License: GPLv2
@@ -42,10 +42,12 @@ if ( !function_exists( 'add_action' ) ) {
 	die('ERROR: This plugin requires WordPress and will not function if called directly.');
 	}
 
-define( 'RSHCL_VERSION', '1.3.5' );
+define( 'RSHCL_VERSION', '1.3.6' );
 define( 'RSHCL_REQUIRED_WP_VERSION', '3.7' );
 
 if ( !defined( 'RSHCL_DEBUG' ) ) 				{ define( 'RSHCL_DEBUG', FALSE ); } // Do not change value unless developer asks you to - for debugging only. Change in wp-config.php.
+if ( !defined( 'RSMP_SITE_URL' ) ) 				{ define( 'RSMP_SITE_URL', untrailingslashit( site_url() ) ); }
+if ( !defined( 'RSMP_SITE_DOMAIN' ) ) 			{ define( 'RSMP_SITE_DOMAIN', rshcl_get_domain( RSMP_SITE_URL ) ); }
 if ( !defined( 'RSHCL_PLUGIN_BASENAME' ) ) 		{ define( 'RSHCL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) ); }
 if ( !defined( 'RSHCL_PLUGIN_FILE_BASENAME' ) ) { define( 'RSHCL_PLUGIN_FILE_BASENAME', trim( basename( __FILE__ ), '/' ) ); }
 if ( !defined( 'RSHCL_PLUGIN_NAME' ) ) 			{ define( 'RSHCL_PLUGIN_NAME', trim( dirname( RSHCL_PLUGIN_BASENAME ), '/' ) ); }
@@ -207,39 +209,6 @@ function rshcl_simple_minifier_js( $js_to_minify, $filter = TRUE ) {
 	$js_minified	= trim( $js_buffer );
 	return $js_minified;
     }
-function rshcl_get_domain($url) {
-	// Filter URLs with nothing after http
-	if ( empty( $url ) || preg_match( "~^https?\:*/*$~i", $url ) ) { return ''; }
-	// Fix poorly formed URLs so as not to throw errors when parsing
-	$url = rshcl_fix_url($url);
-	// NOW start parsing
-	$parsed = parse_url($url);
-	// Filter URLs with no domain
-	if ( empty( $parsed['host'] ) ) { return ''; }
-	$hostname = $parsed['host'];
-	return $hostname;
-	}
-function rshcl_fix_url( $url, $rem_frag = FALSE, $rem_query = FALSE, $rev = FALSE ) {
-	// Fix poorly formed URLs so as not to throw errors or cause problems
-	// Too many forward slashes or colons after http
-	$url = preg_replace( "~^(https?)\:+/+~i", "$1://", $url);
-	// Too many dots
-	$url = preg_replace( "~\.+~i", ".", $url);
-	// Too many slashes after the domain
-	$url = preg_replace( "~([a-z0-9]+)/+([a-z0-9]+)~i", "$1/$2", $url);
-	// Remove fragments
-	if ( !empty( $rem_frag ) && strpos( $url, '#' ) !== FALSE ) { $url_arr = explode( '#', $query ); $url = $url_arr[0]; }
-	// Remove query string completely
-	if ( !empty( $rem_query ) && strpos( $url, '?' ) !== FALSE ) { $url_arr = explode( '?', $query ); $url = $url_arr[0]; }
-	// Reverse
-	if ( !empty( $rev ) ) { $url = strrev($url); }
-	return $url;
-	}
-function rshcl_get_url() {
-	if ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) { $url = 'https://'; } else { $url = 'http://'; }
-	$url .= $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-	return $url;
-	}
 function rshcl_get_slug() {
 	$url = rshcl_get_url();
 	if ( !empty( $url ) ) {
@@ -407,13 +376,52 @@ function rshcl_inspect_styles() {
 // SPEED UP WORDPRESS - END
 
 // Standard Functions - BEGIN
+function rshcl_get_domain($url) {
+	// Get domain from URL
+	// Filter URLs with nothing after http
+	if ( empty( $url ) || preg_match( "~^https?\:*/*$~i", $url ) ) { return ''; }
+	// Fix poorly formed URLs so as not to throw errors when parsing
+	$url = rshcl_fix_url($url);
+	// NOW start parsing
+	$parsed = parse_url($url);
+	// Filter URLs with no domain
+	if ( empty( $parsed['host'] ) ) { return ''; }
+	return strtolower($parsed['host']);
+	}
+function rshcl_fix_url( $url, $rem_frag = FALSE, $rem_query = FALSE, $rev = FALSE ) {
+	// Fix poorly formed URLs so as not to throw errors or cause problems
+	// Too many forward slashes or colons after http
+	$url = preg_replace( "~^(https?)\:+/+~i", "$1://", $url);
+	// Too many dots
+	$url = preg_replace( "~\.+~i", ".", $url);
+	// Too many slashes after the domain
+	$url = preg_replace( "~([a-z0-9]+)/+([a-z0-9]+)~i", "$1/$2", $url);
+	// Remove fragments
+	if ( !empty( $rem_frag ) && strpos( $url, '#' ) !== FALSE ) { $url_arr = explode( '#', $url ); $url = $url_arr[0]; }
+	// Remove query string completely
+	if ( !empty( $rem_query ) && strpos( $url, '?' ) !== FALSE ) { $url_arr = explode( '?', $url ); $url = $url_arr[0]; }
+	// Reverse
+	if ( !empty( $rev ) ) { $url = strrev($url); }
+	return $url;
+	}
+function rshcl_get_url() {
+	if ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) { $url = 'https://'; } else { $url = 'http://'; }
+	$url .= RSMP_SERVER_NAME . $_SERVER['REQUEST_URI'];
+	return $url;
+	}
 function rshcl_get_server_addr() {
 	if ( !empty( $_SERVER['SERVER_ADDR'] ) ) { $server_addr = $_SERVER['SERVER_ADDR']; } else { $server_addr = getenv('SERVER_ADDR'); }
 	return $server_addr;
 	}
 function rshcl_get_server_name() {
-	if ( !empty( $_SERVER['SERVER_NAME'] ) ) { $server_name = strtolower( $_SERVER['SERVER_NAME'] ); } else { $server_name = strtolower( getenv('SERVER_NAME') ); }
-	return $server_name;
+	$rshcl_site_domain		= $server_name = RSMP_SITE_DOMAIN;
+	$rshcl_env_http_host	= getenv('HTTP_HOST');
+	$rshcl_env_srvr_name	= getenv('SERVER_NAME');
+	if 		( !empty( $_SERVER['HTTP_HOST'] ) 	&& strpos( $rshcl_site_domain, $_SERVER['HTTP_HOST'] )		!== FALSE ) { $server_name = $_SERVER['HTTP_HOST']; }
+	elseif 	( !empty( $rshcl_env_http_host ) 	&& strpos( $rshcl_site_domain, $rshcl_env_http_host ) 		!== FALSE ) { $server_name = $rshcl_env_http_host; }
+	elseif 	( !empty( $_SERVER['SERVER_NAME'] ) && strpos( $rshcl_site_domain, $_SERVER['SERVER_NAME'] )	!== FALSE ) { $server_name = $_SERVER['SERVER_NAME']; }
+	elseif 	( !empty( $rshcl_env_srvr_name ) 	&& strpos( $rshcl_site_domain, $rshcl_env_srvr_name )		!== FALSE ) { $server_name = $rshcl_env_srvr_name; }
+	return strtolower( $server_name );
 	}
 function rshcl_doc_txt() {
 	$doc_txt = __( 'Documentation', RSHCL_PLUGIN_NAME );

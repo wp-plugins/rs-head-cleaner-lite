@@ -91,6 +91,11 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 
 == Changelog ==
 
+= 1.3.6 =
+*released 03/06/15*
+
+* Made various minor code improvements.
+
 = 1.3.5 =
 *released 03/03/15*
 
@@ -158,5 +163,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.3.5 =
-Added a function to clear the JS & CSS cache upon deactivating the plugin, and fixed a minor bug. Please see Changelog for details.
+= 1.3.6 =
+Made various minor code improvements. Please see Changelog for details.
