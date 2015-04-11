@@ -66,6 +66,10 @@ For a more thorough explanation of what the plugin does and why you need it, vis
 
 3. Click **Activate** to activate the plugin.
 
+= Other Notes =
+
+This plugin has not been designed specifically for use with Multisite. It can be used in Multisite if activated *per site*, but *should not* be Network Activated. As with any plugin, test and make sure it works with your particular setup before using on a production site.
+
 = More Info / Documentation =
 For more info and full documentation, visit the [RS Head Cleaner Lite plugin homepage](http://www.redsandmarketing.com/plugins/rs-head-cleaner/ "RS Head Cleaner Lite Plugin").
 
