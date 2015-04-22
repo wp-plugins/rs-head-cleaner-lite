@@ -2,8 +2,8 @@
 Contributors: RedSand
 Donate link: http://www.redsandmarketing.com/rs-head-cleaner-lite-donate/
 Tags: cache, clean, cleaner, css, generator, head, head-cleaner, javascript, more, minify, performance, security, seo
-Requires at least: 3.7
-Tested up to: 4.1
+Requires at least: 3.8
+Tested up to: 4.2
 Stable tag: trunk
 
 This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience.
@@ -79,6 +79,10 @@ For more info and full documentation, visit the [RS Head Cleaner Lite plugin hom
 
 This plugin is fast, and lean...there are no options needed. You install it and it just works.
 
+= Does this plugin have any known issues? = 
+
+We are aware of an issue with some themes using sliders, ans some responsive themes. We are currently working on resolving this and creating a fix. Please test this plugin out thoroughly with your theme prior to using it on a live site. We will provide an update as soon as we have this resolved. Most themes are able to use this with no issues whatsoever.
+
 = But I already have a caching Plugin installed...Why do I need CSS and JS caching? =
 
 Caching plugins are awesome...in fact I recommend everyone use caching plugins. But it doesn't help speed up the CSS and JavaScript files downloading. It speeds up the actual PHP and database calls by creating static HTML files. If you have a lot of plugins and have 10 JS and 10 CSS files that have to download on every page, that can still bottleneck and slow your site down. This plugin will reduce those down to 1 JS and 1 CSS that have to be downloaded. Combined with a caching plugin, your site will be even faster.
@@ -94,6 +98,14 @@ This new feature is integral to the plugin, so the caching isn't a feature you w
 Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web-design/wordpress-consulting/ "WordPress Consulting") page for more information.
 
 == Changelog ==
+
+= 1.3.7 =
+*released 04/22/15*
+
+* Fixed some bugs with the JavaScript and CSS compression.
+* Added an `.htaccess` file to the `rs-head-cleaner-lite` directory to control browser access to certain files.
+* Increased minimum required WordPress version to 3.8.
+* Made various code improvements.
 
 = 1.3.6 =
 *released 03/06/15*
@@ -167,5 +179,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.3.6 =
-Made various minor code improvements. Please see Changelog for details.
+= 1.3.7 =
+Fixed some bugs, added an .htaccess file, increased the minimum required WordPress version to 3.8, and made various code improvements. Please see Changelog for details.
