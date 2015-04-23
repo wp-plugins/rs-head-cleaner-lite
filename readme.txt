@@ -81,7 +81,7 @@ This plugin is fast, and lean...there are no options needed. You install it and 
 
 = Does this plugin have any known issues? = 
 
-We are aware of an issue with some themes using sliders, ans some responsive themes. We are currently working on resolving this and creating a fix. Please test this plugin out thoroughly with your theme prior to using it on a live site. We will provide an update as soon as we have this resolved. Most themes are able to use this with no issues whatsoever.
+We are aware of an issue with some themes using sliders, and some responsive themes. We are currently working on resolving this and creating a fix. Please test this plugin out thoroughly with your theme prior to using it on a live site. We will provide an update as soon as we have this resolved. *Most themes are able to use this with no issues whatsoever.*
 
 = But I already have a caching Plugin installed...Why do I need CSS and JS caching? =
 
