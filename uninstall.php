@@ -1,24 +1,22 @@
 <?php
 /*
 RS Head Cleaner Lite - uninstall.php
-Version: 1.3.5
+Version: 1.3.9
 
 This script uninstalls RS Head Cleaner Lite and removes all cache files, options, data, and traces of its existence.
 */
 
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) 	{ exit(); }
+if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) 	{ die(); }
 
-if ( !defined( 'RSHCL_CACHE_DIR_NAME' ) ) 	{ define( 'RSHCL_CACHE_DIR_NAME', 'rshcl-cache' ); }
-if ( !defined( 'RSHCL_CACHE_PATH' ) ) 		{ define( 'RSHCL_CACHE_PATH', WP_CONTENT_DIR.'/'.RSHCL_CACHE_DIR_NAME.'/' ); }
+if ( !defined( 'RSHCL_CACHE_DIR_NAME' ) ) 	{ define( 'RSHCL_CACHE_DIR_NAME', 'rshcl' ); }
+if ( !defined( 'RSHCL_CACHE_PATH' ) ) 		{ define( 'RSHCL_CACHE_PATH', WP_CONTENT_DIR.'/cache/'.RSHCL_CACHE_DIR_NAME.'/' ); }
 if ( !defined( 'RSHCL_JS_PATH' ) ) 			{ define( 'RSHCL_JS_PATH', RSHCL_CACHE_PATH.'/js/' ); }
 if ( !defined( 'RSHCL_CSS_PATH' ) ) 		{ define( 'RSHCL_CSS_PATH', RSHCL_CACHE_PATH.'/css/' ); }
 
 function rshcl_uninstall_plugin() {
 	// Options to Delete
-	$rshcl_option_names = array( 'rs_head_cleaner_lite_version', 'rshcl_admin_notices' );
-	foreach( $rshcl_option_names as $i => $rshcl_option ) {
-		delete_option( $rshcl_option );
-		}
+	$rshcl_options = array( 'rs_head_cleaner_lite_version', 'rshcl_admin_notices' );
+	foreach( $rshcl_options as $i => $rshcl_option ) { delete_option( $rshcl_option ); }
 
 	$rshcl_dirs = array( 'css' => RSHCL_CSS_PATH, 'js' => RSHCL_JS_PATH, 'cache' => RSHCL_CACHE_PATH );
 	foreach( $rshcl_dirs as $d => $dir ) {

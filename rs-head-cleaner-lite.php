@@ -4,7 +4,7 @@ Plugin Name: RS Head Cleaner Lite
 Plugin URI: http://www.redsandmarketing.com/plugins/rs-head-cleaner/
 Description: This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience. It removes junk code from the document HEAD & HTTP headers, hides the WP Version, Combines/Minifies/Caches CSS and JavaScript files, removes version numbers from CSS and JS links, removes HTML comments, and fixes the "Read more" link so it displays the entire post.
 Author: Scott Allen
-Version: 1.3.8
+Version: 1.3.9
 Author URI: http://www.redsandmarketing.com/
 Text Domain: rs-head-cleaner-lite
 License: GPLv2
@@ -40,7 +40,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	die( 'ERROR: This plugin requires WordPress and will not function if called directly.' );
 	}
 
-define( 'RSHCL_VERSION', '1.3.8' );
+define( 'RSHCL_VERSION', '1.3.9' );
 define( 'RSHCL_REQUIRED_WP_VERSION', '3.8' );
 //define( 'RSHCL_REQUIRED_PHP_VERSION', '5.3' ); /* Implement in future version */
 
@@ -56,12 +56,13 @@ if ( !defined( 'RSHC_REMOVE_OPEN_SANS' ) ) 		{ define( 'RSHC_REMOVE_OPEN_SANS', 
 // By default this feature is off, but if you don't need Open Sans and you want a faster site, add a line in your wp-config.php that says: "define( 'RSHC_REMOVE_OPEN_SANS', TRUE );"
 // RSHC_REMOVE_OPEN_SANS is a shared constant with RSHCP.
 // Constants prefixed with 'RSMP_' are shared with other RSM Plugins for efficiency. Any of these values can be changed in wp-config.php:
-if ( !defined( 'RSHCL_CACHE_DIR_NAME' ) ) 		{ define( 'RSHCL_CACHE_DIR_NAME', 'rshcl-cache' ); }
-if ( !defined( 'RSHCL_CACHE_PATH' ) ) 			{ define( 'RSHCL_CACHE_PATH', WP_CONTENT_DIR.'/'.RSHCL_CACHE_DIR_NAME.'/' ); }
-if ( !defined( 'RSHCL_JS_PATH' ) ) 				{ define( 'RSHCL_JS_PATH', RSHCL_CACHE_PATH.'/js/' ); }
-if ( !defined( 'RSHCL_CSS_PATH' ) ) 			{ define( 'RSHCL_CSS_PATH', RSHCL_CACHE_PATH.'/css/' ); }
-if ( !defined( 'RSHCL_JS_URL' ) ) 				{ define( 'RSHCL_JS_URL', WP_CONTENT_URL.'/'.RSHCL_CACHE_DIR_NAME.'/js/' ); }
-if ( !defined( 'RSHCL_CSS_URL' ) ) 				{ define( 'RSHCL_CSS_URL', WP_CONTENT_URL.'/'.RSHCL_CACHE_DIR_NAME.'/css/' ); }
+if ( !defined( 'RSHCL_CACHE_DIR_NAME' ) ) 		{ define( 'RSHCL_CACHE_DIR_NAME', 'rshcl' ); }
+if ( !defined( 'RSHCL_CACHE_PATH' ) ) 			{ define( 'RSHCL_CACHE_PATH', WP_CONTENT_DIR.'/cache/'.RSHCL_CACHE_DIR_NAME.'/' ); }
+if ( !defined( 'RSHCL_JS_PATH' ) ) 				{ define( 'RSHCL_JS_PATH', RSHCL_CACHE_PATH.'js/' ); }
+if ( !defined( 'RSHCL_CSS_PATH' ) ) 			{ define( 'RSHCL_CSS_PATH', RSHCL_CACHE_PATH.'css/' ); }
+if ( !defined( 'RSHCL_CACHE_URL' ) ) 			{ define( 'RSHCL_CACHE_URL', WP_CONTENT_URL.'/cache/'.RSHCL_CACHE_DIR_NAME.'/' ); }
+if ( !defined( 'RSHCL_JS_URL' ) ) 				{ define( 'RSHCL_JS_URL', RSHCL_CACHE_URL.'js/' ); }
+if ( !defined( 'RSHCL_CSS_URL' ) ) 				{ define( 'RSHCL_CSS_URL', RSHCL_CACHE_URL.'css/' ); }
 if ( !defined( 'RSMP_CONTENT_DIR_URL' ) ) 		{ define( 'RSMP_CONTENT_DIR_URL', WP_CONTENT_URL ); }
 if ( !defined( 'RSMP_CONTENT_DIR_PATH' ) ) 		{ define( 'RSMP_CONTENT_DIR_PATH', WP_CONTENT_DIR ); }
 if ( !defined( 'RSMP_PLUGINS_DIR_URL' ) ) 		{ define( 'RSMP_PLUGINS_DIR_URL', WP_PLUGIN_URL ); }
@@ -132,7 +133,7 @@ function rshcl_remove_html_comments( $buffer ) {
 	}
 function rshcl_replace_comments( $s ) {
 	list( $l ) = $s;
-	if ( preg_match( "~\!?\[(end)?if~iu", $l ) ) { return $l; }
+	if ( preg_match( "~(\!?\[(end)?if|noptimize)~iu", $l ) ) { return $l; }
 	return '';
 	}
 function rshcl_buffer_start() {
@@ -242,21 +243,7 @@ function rshcl_simple_minifier_js( $js_to_minify, $filter = TRUE ) {
     }
 function rshcl_get_slug() {
 	$url = rshcl_get_url();
-	$slug = '0';
-	if ( !empty( $url ) ) {
-		$slug = url_to_postid( $url );
-		}
-	if ( empty( $slug ) ) {
-		if ( is_home() ) { $slug = 'hm'; }
-		elseif ( is_front_page() ) { $slug = 'fr'; }
-		elseif ( is_search() ) { $slug = 'sr'; }
-		elseif ( is_archive() ) {
-			$url_deslash = untrailingslashit( $url );
-			$url_parts = explode( '/', $url_deslash );
-			$last = count( $url_parts ) - 1;
-			$slug = trim( str_replace( array( '?', '&', '=' ), '-', $url_parts[$last] ), " \t\n\r\0\x0B-" );
-			}
-		}
+	$slug = rshcl_md5( $url );
 	return $slug;
 	}
 function rshcl_strlen( $string ) {
@@ -272,15 +259,19 @@ function rshcl_cache_combine_js_css() {
 	if ( !is_admin() && !is_user_logged_in() ) {
 		add_action( 'wp_enqueue_scripts', 'rshcl_enqueue_styles', 9999 );
 		add_action( 'wp_enqueue_scripts', 'rshcl_enqueue_scripts', 9999 );
+		add_action( 'login_enqueue_scripts', 'rshcl_enqueue_styles', 9999 );
+		add_action( 'login_enqueue_scripts', 'rshcl_enqueue_scripts', 9999 );
 		add_action( 'wp_print_styles', 'rshcl_inspect_styles', 9999 );
 		add_action( 'wp_print_scripts', 'rshcl_inspect_scripts', 9999 );
 		add_action( 'wp_print_head_scripts', 'rshcl_inspect_scripts', 9999 );
 		}
 	}
 function rshcl_enqueue_styles() {
-	$slug = rshcl_get_slug();
-	$min_slug = 'rsm-min-css-'.$slug;
-	$min_file_slug = $min_slug.'.css';
+	$slug			= rshcl_get_slug();
+	$min_slug		= 'rsm-min-css-'.$slug;
+	$min_file_slug	= $min_slug.'.css';
+	$css_url		= RSHCL_CSS_URL.$min_file_slug;
+	$css_file		= RSHCL_CSS_PATH.$min_file_slug;
 	$deps = array();
 	global $wp_styles;
 	if ( is_object( $wp_styles ) ) {
@@ -299,14 +290,18 @@ function rshcl_enqueue_styles() {
 				}
 			}
 		}
-	wp_register_style( $min_slug, RSHCL_CSS_URL.$min_file_slug, $deps, RSHCL_VERSION );
-	wp_enqueue_style( $min_slug );
+	if ( file_exists( $css_file ) ) {
+		wp_register_style( $min_slug, $css_url, $deps, RSHCL_VERSION );
+		wp_enqueue_style( $min_slug );
+		}
 	}
 function rshcl_enqueue_scripts() {
-	$slug = rshcl_get_slug();
-	$min_slug = 'rsm-min-js-'.$slug;
-	$min_file_slug = $min_slug.'.js';
-	$deps = array();
+	$slug			= rshcl_get_slug();
+	$min_slug		= 'rsm-min-js-'.$slug;
+	$min_file_slug	= $min_slug.'.js';
+	$js_url			= RSHCL_JS_URL.$min_file_slug;
+	$js_file		= RSHCL_JS_PATH.$min_file_slug;
+	$deps			= array();
 	global $wp_scripts;
 	if ( is_object( $wp_scripts ) ) {
 		foreach( $wp_scripts->queue as $handle ) {
@@ -324,8 +319,10 @@ function rshcl_enqueue_scripts() {
 				}
 			}
 		}
-	wp_register_script( $min_slug, RSHCL_JS_URL.$min_file_slug, $deps, RSHCL_VERSION, FALSE );
-	wp_enqueue_script( $min_slug );
+	if ( file_exists( $js_file ) ) {
+		wp_register_script( $min_slug, $js_url, $deps, RSHCL_VERSION, FALSE );
+		wp_enqueue_script( $min_slug );
+		}
 	}
 function rshcl_inspect_scripts() {
 	$slug 	= rshcl_get_slug();
@@ -344,10 +341,10 @@ function rshcl_inspect_scripts() {
 	$http_pref		= rshcl_is_https() ? 'https://' : 'http://';
 	if ( is_object( $wp_scripts ) ) {
 		foreach( $wp_scripts->queue as $handle ) {
-			$script_src = $script_src_path = $wp_scripts->registered[$handle]->src;
-			$script_domain = rshcl_get_domain( $script_src );
+			$script_src			= $script_src_path = $wp_scripts->registered[$handle]->src;
+			$script_domain		= rshcl_get_domain( $script_src );
 			if( empty( $script_src ) || $handle == $min_slug || $handle == 'contact-form-7' || $script_domain != $domain ) { continue; }
-			$script_src_rev = rshcl_fix_url( $script_src, TRUE, TRUE, TRUE );
+			$script_src_rev		= rshcl_fix_url( $script_src, TRUE, TRUE, TRUE );
 			if ( strpos( $script_src_rev, 'sj.' ) !== 0 ) { continue; } // Not JS
 			if ( strpos( $script_src_path, '//' ) === 0 ) { $script_src_path = str_replace( '//', $http_pref, $script_src_path ); }
 			$script_src_path	= str_replace( RSMP_CONTENT_DIR_URL, RSMP_CONTENT_DIR_PATH, $script_src_path );
@@ -526,6 +523,7 @@ function rshcl_is_https() {
 	}
 function rshcl_get_server_addr() {
 	if ( !empty( $_SERVER['SERVER_ADDR'] ) ) { $server_addr = $_SERVER['SERVER_ADDR']; } else { $server_addr = getenv('SERVER_ADDR'); }
+	if ( empty( $server_addr ) ) { $server_addr = ''; }
 	return $server_addr;
 	}
 function rshcl_get_server_name() {
@@ -539,8 +537,7 @@ function rshcl_get_server_name() {
 	return rshcl_casetrans( 'lower', $server_name );
 	}
 function rshcl_doc_txt() {
-	$doc_txt = __( 'Documentation', RSHCL_PLUGIN_NAME );
-	return $doc_txt;
+	return __( 'Documentation', RSHCL_PLUGIN_NAME );
 	}
 function rshcl_scandir( $dir ) {
 	clearstatcache();
@@ -553,10 +550,8 @@ function rshcl_append_log_data( $str = NULL, $rsds_only = FALSE ) {
 	// Adds data to the log for debugging - only use when Debugging - Use with WP_DEBUG & RSHCL_DEBUG
 	/*
 	* Example:
-	* rshcl_append_log_data( "\n".'$rshcl_example_variable: "'.$rshcl_example_variable.'" Line: '.__LINE__.' | '.__FUNCTION__, TRUE );
 	* rshcl_append_log_data( "\n".'$rshcl_example_variable: "'.$rshcl_example_variable.'" Line: '.__LINE__.' | '.__FUNCTION__.' | MEM USED: ' . rshcl_format_bytes( memory_get_usage() ), TRUE );
 	* rshcl_append_log_data( "\n".'[A]$rshcl_example_array_var: "'.serialize($rshcl_example_array_var).'" Line: '.__LINE__.' | '.__FUNCTION__.' | MEM USED: ' . rshcl_format_bytes( memory_get_usage() ), TRUE );
-	* rshcl_append_log_data( "\n".'Line: '.__LINE__.' | '.__FUNCTION__.' | MEM USED: ' . rshcl_format_bytes( memory_get_usage() ), TRUE );
 	*/
 	if ( WP_DEBUG === TRUE && RSHCL_DEBUG === TRUE ) {
 		if ( !empty( $rsds_only ) && strpos( RSMP_SERVER_NAME_REV, RSMP_DEBUG_SERVER_NAME_REV ) !== 0 ) { return; }
@@ -575,6 +570,14 @@ function rshcl_sort_unique($arr) {
 	$arr_tmp = array_unique($arr); natcasesort($arr_tmp); $new_arr = array_values($arr_tmp);
 	return $new_arr;
 	}
+function rshcl_md5( $string ) {
+	/***
+	* Use this function instead of hash for compatibility
+	* BUT hash is faster than md5, so use it whenever possible
+	***/
+	if ( function_exists( 'hash' ) ) { $hash = hash( 'md5', $string ); } else { $hash = md5( $string );	}
+	return $hash;
+	}
 // Standard Functions - END
 
 // Admin Functions - BEGIN
@@ -582,9 +585,10 @@ register_activation_hook( __FILE__, 'rshcl_activation' );
 function rshcl_activation() {
 	$installed_ver = get_option('rs_head_cleaner_lite_version');
 	rshcl_upgrade_check( $installed_ver );
-	$rshcl_js_dir		= RSHCL_JS_PATH;
-	$rshcl_css_dir		= RSHCL_CSS_PATH;
-	$rshcl_index_file	= RSHCL_PLUGIN_PATH.'index.php';
+	$rshcl_js_dir			= RSHCL_JS_PATH;
+	$rshcl_css_dir			= RSHCL_CSS_PATH;
+	$rshcl_index_file		= RSHCL_PLUGIN_PATH.'index.php';
+	$rshcl_htaccess_file	= RSHCL_PLUGIN_PATH.'lib/.htaccess';
 	if ( !file_exists( $rshcl_js_dir ) ) {
 		wp_mkdir_p( $rshcl_js_dir );
 		@copy ( $rshcl_index_file, $rshcl_js_dir.'index.php' );
@@ -594,6 +598,7 @@ function rshcl_activation() {
 		@copy ( $rshcl_index_file, $rshcl_css_dir.'index.php' );
 		}
 	@copy ( $rshcl_index_file, RSHCL_CACHE_PATH.'index.php' );
+	@copy ( $rshcl_htaccess_file, RSHCL_CACHE_PATH.'.htaccess' );
 	}
 add_action( 'admin_init', 'rshcl_check_version' );
 function rshcl_check_version() {
