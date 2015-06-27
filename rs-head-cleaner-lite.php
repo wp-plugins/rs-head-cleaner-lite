@@ -290,10 +290,8 @@ function rshcl_enqueue_styles() {
 				}
 			}
 		}
-	if ( file_exists( $css_file ) ) {
-		wp_register_style( $min_slug, $css_url, $deps, RSHCL_VERSION );
-		wp_enqueue_style( $min_slug );
-		}
+	wp_register_style( $min_slug, $css_url, $deps, RSHCL_VERSION );
+	wp_enqueue_style( $min_slug );
 	}
 function rshcl_enqueue_scripts() {
 	$slug			= rshcl_get_slug();
@@ -319,10 +317,8 @@ function rshcl_enqueue_scripts() {
 				}
 			}
 		}
-	if ( file_exists( $js_file ) ) {
-		wp_register_script( $min_slug, $js_url, $deps, RSHCL_VERSION, FALSE );
-		wp_enqueue_script( $min_slug );
-		}
+	wp_register_script( $min_slug, $js_url, $deps, RSHCL_VERSION, FALSE );
+	wp_enqueue_script( $min_slug );
 	}
 function rshcl_inspect_scripts() {
 	$slug 	= rshcl_get_slug();
@@ -371,7 +367,7 @@ function rshcl_inspect_scripts() {
 		$raw_js_file_filesize	= FALSE;
 		}
 	$js_cache_time = time() - 86400; // 60 * 60 * 1 - Sec * Min * Hour; 3600 = 1 Hour; 86400 = 24 Hours;
-	if( $raw_js_file_filesize != $combined_js_contents_len || $raw_js_file_mod_time < $plugin_file_mod_time || $raw_js_file_mod_time < $js_cache_time ) {
+	if( $raw_js_file_filesize !== $combined_js_contents_len || $raw_js_file_mod_time < $plugin_file_mod_time || $raw_js_file_mod_time < $js_cache_time ) {
 		file_put_contents( $raw_js_file, $combined_js_contents_raw );
 		file_put_contents( $min_js_file, $combined_js_contents );
 		}
@@ -452,7 +448,7 @@ function rshcl_inspect_styles() {
 		$raw_css_file_filesize	= FALSE;
 		}
 	$css_cache_time = time() - 86400; // 60 * 60 * 1 - Sec * Min * Hour; 3600 = 1 Hour; 86400 = 24 Hours;
-	if( $raw_css_file_filesize != $combined_css_contents_len || $raw_css_file_mod_time < $plugin_file_mod_time || $raw_css_file_mod_time < $css_cache_time ) {
+	if( $raw_css_file_filesize !== $combined_css_contents_len || $raw_css_file_mod_time < $plugin_file_mod_time || $raw_css_file_mod_time < $css_cache_time ) {
 		file_put_contents( $raw_css_file, $combined_css_contents_raw );
 		file_put_contents( $min_css_file, $combined_css_contents );
 		}
@@ -585,6 +581,8 @@ register_activation_hook( __FILE__, 'rshcl_activation' );
 function rshcl_activation() {
 	$installed_ver = get_option('rs_head_cleaner_lite_version');
 	rshcl_upgrade_check( $installed_ver );
+	}
+function rshcl_mk_cache_dir() {
 	$rshcl_js_dir			= RSHCL_JS_PATH;
 	$rshcl_css_dir			= RSHCL_CSS_PATH;
 	$rshcl_index_file		= RSHCL_PLUGIN_PATH.'index.php';
@@ -645,7 +643,10 @@ function rshcl_admin_notices() {
 	}
 function rshcl_upgrade_check( $installed_ver = NULL ) {
 	if ( empty( $installed_ver ) ) { $installed_ver = get_option('rs_head_cleaner_lite_version'); }
-	if ( $installed_ver != RSHCL_VERSION ) { update_option('rs_head_cleaner_lite_version', RSHCL_VERSION); }
+	if ( $installed_ver != RSHCL_VERSION ) { 
+		update_option('rs_head_cleaner_lite_version', RSHCL_VERSION);
+		rshcl_mk_cache_dir();
+		}
 	}
 add_filter( 'plugin_row_meta', 'rshcl_filter_plugin_meta', 10, 2 ); // Added 1.3.5
 function rshcl_filter_plugin_meta( $links, $file ) {
