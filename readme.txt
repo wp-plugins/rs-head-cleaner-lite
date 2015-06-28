@@ -36,6 +36,11 @@ Use this plugin instead of [RS Head Cleaner Plus](http://wordpress.org/plugins/r
 
 For a more thorough explanation of what the plugin does and why you need it, visit the [RS Head Cleaner Lite homepage](http://www.redsandmarketing.com/plugins/rs-head-cleaner/ "RS Head Cleaner Lite Plugin").
 
+= Requirements =
+
+* WordPress 3.8 or higher (Recommended: WordPress 4.0 or higher)
+* PHP 5.3 or higher (Recommended: PHP 5.4 or higher)
+
 == Installation ==
 
 = Installation Instructions =
@@ -101,8 +106,15 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 
 == Changelog ==
 
-= 1.3.9 =
+= 1.4 =
 *released 06/27/15*
+
+* Added a minimum required PHP version of 5.3, as we are no longer supporting PHP 5.2. The PHP team [stopped supporting PHP 5.2 back in 2011](http://php.net/archive/2011.php#id2011-08-23-1), and even PHP 5.3 reached its end of life in August 2014. WordPress has a current minimum requirement of 5.2.4, but PHP 5.4 is recommended - see the [WordPress requirements](https://wordpress.org/about/requirements/). It's extremely important that users stay up to date with the most recent version of WordPress (currently 4.1.1) and a reasonably up-to-date version of PHP for security, functionality, and website performance. (Not only are the newer versions more secure, but they are faster, so its a double win.) We recommend PHP 5.4 or higher, especially if you care about optimizing your site's speed. Also, see [PHP Unsupported Branches](http://php.net/eol.php) for more info.
+* Modified the deactivation and uninstall functions to clean up the files in the old folder location as well.
+* Fixed a bug where CSS & JS cache files were not being written in certain situations.
+
+= 1.3.9 =
+*released 06/26/15*
 
 * Added gzip compression and far future Expires headers to concatenated CSS and JS files.
 * Moved the plugin's cache folder into the `/wp-content/cache/` folder. New location is `/wp-content/cache/rshcl/`.
@@ -195,5 +207,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.3.9 =
-* Added gzip compression and far future Expires headers, moved the plugin's cache folder, changed the naming system to utilize a faster method, and fixed a bug on login pages. Please see Changelog for details.
+= 1.4 =
+* Added minimum required PHP version of 5.3 as we no longer support PHP 5.2, modified the uninstall function to clean up files in old location, and fixed a bug in writing the cache files. Please see Changelog for details.

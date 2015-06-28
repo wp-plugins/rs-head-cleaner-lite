@@ -1,7 +1,7 @@
 <?php
 /*
 RS Head Cleaner Lite - uninstall.php
-Version: 1.3.9
+Version: 1.4
 
 This script uninstalls RS Head Cleaner Lite and removes all cache files, options, data, and traces of its existence.
 */
@@ -17,25 +17,31 @@ function rshcl_uninstall_plugin() {
 	// Options to Delete
 	$rshcl_options = array( 'rs_head_cleaner_lite_version', 'rshcl_admin_notices' );
 	foreach( $rshcl_options as $i => $rshcl_option ) { delete_option( $rshcl_option ); }
-
-	$rshcl_dirs = array( 'css' => RSHCL_CSS_PATH, 'js' => RSHCL_JS_PATH, 'cache' => RSHCL_CACHE_PATH );
-	foreach( $rshcl_dirs as $d => $dir ) {
-		if ( is_dir( $rshcl_dirs[$d] ) ) {
-			$filelist = rshcl_scandir( $rshcl_dirs[$d] );
-			foreach( $filelist as $f => $filename ) {
-				$file = $rshcl_dirs[$d].$filename;
-				if ( is_file( $file ) ){
-					@chmod( $file, 0775 );
-					@unlink( $file );
-					if ( file_exists( $file ) ) { @chmod( $file, 0644 ); }
+	$rshcl_cache_path_old	= str_replace( '/cache/'.RSHCL_CACHE_DIR_NAME.'/', '/rshcl-cache/', RSHCL_CACHE_PATH );
+	$rshcl_css_path_old		= str_replace( '/cache/'.RSHCL_CACHE_DIR_NAME.'/', '/rshcl-cache/', RSHCL_CSS_PATH );
+	$rshcl_js_path_old		= str_replace( '/cache/'.RSHCL_CACHE_DIR_NAME.'/', '/rshcl-cache/', RSHCL_JS_PATH );
+	$rshcl_dirs_all = array( 
+		array( 'css' => RSHCL_CSS_PATH, 'js' => RSHCL_JS_PATH, 'cache' => RSHCL_CACHE_PATH ),
+		array( 'css' => $rshcl_css_path_old, 'js' => $rshcl_js_path_old, 'cache' => $rshcl_cache_path_old ),
+		);
+	foreach( $rshcl_dirs_all as $i => $rshcl_dirs ) {
+		foreach( $rshcl_dirs as $d => $dir ) {
+			if ( is_dir( $rshcl_dirs[$d] ) ) {
+				$filelist = rshcl_scandir( $rshcl_dirs[$d] );
+				foreach( $filelist as $f => $filename ) {
+					$file = $rshcl_dirs[$d].$filename;
+					if ( is_file( $file ) ){
+						@chmod( $file, 0775 );
+						@unlink( $file );
+						if ( file_exists( $file ) ) { @chmod( $file, 0644 ); }
+						}
 					}
+				@chmod( $rshcl_dirs[$d], 0775 );
+				@rmdir( $rshcl_dirs[$d] );
+				if ( file_exists( $rshcl_dirs[$d] ) ) { @chmod( $rshcl_dirs[$d], 0755 ); }
 				}
-			@chmod( $rshcl_dirs[$d], 0775 );
-			@rmdir( $rshcl_dirs[$d] );
-			if ( file_exists( $rshcl_dirs[$d] ) ) { @chmod( $rshcl_dirs[$d], 0755 ); }
 			}
 		}
-	
 	}
 
 function rshcl_scandir( $dir ) {
