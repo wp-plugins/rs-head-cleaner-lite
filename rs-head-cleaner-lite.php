@@ -75,6 +75,7 @@ if ( !defined( 'RSMP_DEBUG_SERVER_NAME_REV' ) )	{ define( 'RSMP_DEBUG_SERVER_NAM
 if ( !defined( 'RSMP_RSM_URL' ) ) 				{ define( 'RSMP_RSM_URL', 'http://www.redsandmarketing.com/' ); }
 if ( !defined( 'RSHCL_HOME_URL' ) ) 			{ define( 'RSHCL_HOME_URL', RSMP_RSM_URL.'plugins/rs-head-cleaner/' ); }
 if ( !defined( 'RSHCL_WP_URL' ) ) 				{ define( 'RSHCL_WP_URL', 'http://wordpress.org/extend/plugins/rs-head-cleaner-lite/' ); }
+if ( !defined( 'RSHCL_PHP_VERSION' ) ) 			{ define( 'RSHCL_PHP_VERSION', PHP_VERSION ); }
 if ( !defined( 'RSMP_WP_VERSION' ) ) {
 	global $wp_version;
 	define( 'RSMP_WP_VERSION', $wp_version );
@@ -655,8 +656,8 @@ function rshcl_check_version() {
 			return FALSE;
 			}
 		/* Make sure user has minimum required PHP version, in order to prevent issues */
-		$rshcl_php_version = RSMP_PHP_VERSION;
-		if ( !empty( $rshcl_php_version ) && version_compare( RSMP_PHP_VERSION, RSHCL_REQUIRED_PHP_VERSION, '<' ) ) {
+		$rshcl_php_version = RSHCL_PHP_VERSION;
+		if ( !empty( $rshcl_php_version ) && version_compare( RSHCL_PHP_VERSION, RSHCL_REQUIRED_PHP_VERSION, '<' ) ) {
 			deactivate_plugins( RSHCL_PLUGIN_BASENAME );
 			$notice_text = sprintf( __( '<p>Plugin deactivated. <strong>Your server is running PHP version %3$s, but RS Head Cleaner Lite requires at least PHP %1$s.</strong> We are no longer supporting PHP 5.2, as it has not been supported by the PHP team <a href=%2$s>since 2011</a>, and there are known security, performance, and compatibility issues.</p><p>The version of PHP running on your server is <em>extremely out of date</em>. You should upgrade your PHP version as soon as possible.</p><p>If you need help with this, please contact your web hosting company and ask them to switch your PHP version to 5.4 or 5.5. Please see the <a href=%4$s>plugin documentation</a> if you have further questions.</p>', RSHCL_PLUGIN_NAME ), RSHCL_REQUIRED_PHP_VERSION, '"http://php.net/archive/2011.php#id2011-08-23-1" target="_blank" rel="external" ', $rshcl_php_version, '"'.RSHCL_HOME_URL.'?src='.RSHCL_VERSION.'-php-notice#rshc_requirements" target="_blank" rel="external" ' ); /* NEEDS TRANSLATION - Added 1.4.0 */
 			$new_admin_notice = array( 'style' => 'error', 'notice' => $notice_text );
