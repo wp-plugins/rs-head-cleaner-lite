@@ -106,6 +106,11 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 
 == Changelog ==
 
+= 1.4.0.1 =
+*released 06/29/15*
+
+* Fixed a bug.
+
 = 1.4 =
 *released 06/27/15*
 
@@ -207,5 +212,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.4 =
-* Added minimum required PHP version of 5.3 as we no longer support PHP 5.2, modified the uninstall function to clean up files in old location, and fixed a bug in writing the cache files. Please see Changelog for details.
+= 1.4.0.1 =
+* Fixed a bug. Please see Changelog for details.

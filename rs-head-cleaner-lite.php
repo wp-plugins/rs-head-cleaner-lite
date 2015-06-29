@@ -4,7 +4,7 @@ Plugin Name: RS Head Cleaner Lite
 Plugin URI: http://www.redsandmarketing.com/plugins/rs-head-cleaner/
 Description: This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience. It removes junk code from the document HEAD & HTTP headers, hides the WP Version, Combines/Minifies/Caches CSS and JavaScript files, removes version numbers from CSS and JS links, removes HTML comments, and fixes the "Read more" link so it displays the entire post.
 Author: Scott Allen
-Version: 1.4
+Version: 1.4.0.1
 Author URI: http://www.redsandmarketing.com/
 Text Domain: rs-head-cleaner-lite
 License: GPLv2
@@ -40,7 +40,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	die( 'ERROR: This plugin requires WordPress and will not function if called directly.' );
 	}
 
-define( 'RSHCL_VERSION', '1.4' );
+define( 'RSHCL_VERSION', '1.4.0.1' );
 define( 'RSHCL_REQUIRED_WP_VERSION', '3.8' );
 define( 'RSHCL_REQUIRED_PHP_VERSION', '5.3' );
 
