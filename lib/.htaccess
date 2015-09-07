@@ -1,5 +1,5 @@
 # RS Head Cleaner - Cache .htaccess
-# Version 1.3.9
+# Version 1.4.1
 
 # Cache, Expiration, and Compression
 
@@ -29,23 +29,14 @@
 	AddOutputFilterByType DEFLATE application/javascript
 </IfModule>
 
-# Apache 2.2
-<IfModule !mod_authz_core.c>
-	Order Allow,Deny
-	Allow from all
-</IfModule>
-
-# Apache 2.4
-<IfModule mod_authz_core.c>
-	Require all granted
-</IfModule>
-
-# Uncompressed JS and CSS Files - Deny
-<Files ~ "rsm\-raw\-(css|js)-[0-z]{32}\.(css|js)$">
+<Files ~ "^(.+)\.(css/js)$">
+	# Apache 2.2
 	<IfModule !mod_authz_core.c>
-		Deny from all
+		Order Allow,Deny
+		Allow from all
 	</IfModule>
+	# Apache 2.4
 	<IfModule mod_authz_core.c>
-		Require all denied
+		Require all granted
 	</IfModule>
 </Files>

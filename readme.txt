@@ -3,7 +3,7 @@ Contributors: RedSand
 Donate link: http://www.redsandmarketing.com/rs-head-cleaner-lite-donate/
 Tags: cache, clean, cleaner, combine, compress, compression, concatenate, css, generator, google, gtmetrix, head, head-cleaner, javascript, more, minify, minification, optimization, optimize, page-speed, pagespeed, performance, security, search engine optimization, seo, speed, yahoo, yslow
 Requires at least: 3.8
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: trunk
 
 This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience.
@@ -106,10 +106,13 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 
 == Changelog ==
 
-= 1.4.0.1 =
-*released 06/29/15*
+= 1.4.2 =
+*released 09/07/15*
 
-* Fixed a bug.
+* Added error checking to ensure cached CSS and JS files get created, even if there is an error on the first try.
+* Improved compatibility with certain themes and scripts.
+* Added a number of PHP constants that can be added to `wp-config.php` to modify the plugin's behavior. Documentation will be coming soon.
+* Various other code improvements.
 
 = 1.4 =
 *released 06/27/15*
@@ -212,5 +215,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.4.0.1 =
-* Fixed a bug. Please see Changelog for details.
+= 1.4.2 =
+* Added error checking during cache file creation, improved compatibility with certain themes and scripts, and various other code improvements. Please see Changelog for details.
