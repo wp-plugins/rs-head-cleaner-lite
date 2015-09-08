@@ -4,7 +4,7 @@ Plugin Name: RS Head Cleaner Lite
 Plugin URI: http://www.redsandmarketing.com/plugins/rs-head-cleaner/
 Description: This plugin cleans up a number of issues, doing the work of multiple plugins, improving speed, efficiency, security, SEO, and user experience. It removes junk code from the document HEAD & HTTP headers, hides the WP Version, Combines/Minifies/Caches CSS and JavaScript files, removes HTML comments, removes version numbers from CSS and JS links, and fixes the "Read more" link so it displays the entire post.
 Author: Scott Allen
-Version: 1.4.2
+Version: 1.4.2.1
 Author URI: http://www.redsandmarketing.com/
 Text Domain: rs-head-cleaner-lite
 License: GPLv2
@@ -39,7 +39,7 @@ if( !defined( 'ABSPATH' ) ) {
 /* BENCHMARK - BEGIN */
 /*$start_time = rshcp_microtime();*/
 
-define( 'RSHCP_VERSION', '1.4.2' );
+define( 'RSHCP_VERSION', '1.4.2.1' );
 define( 'RSHCP_REQUIRED_WP_VERSION', '3.8' );
 define( 'RSHCP_REQUIRED_PHP_VERSION', '5.3' );
 
@@ -78,7 +78,7 @@ if( !defined( 'RSHCP_DEBUG_SERVER_NAME' ) ) 	{ define( 'RSHCP_DEBUG_SERVER_NAME'
 if( !defined( 'RSHCP_DEBUG_SERVER_NAME_REV' ) )	{ define( 'RSHCP_DEBUG_SERVER_NAME_REV', strrev( RSHCP_DEBUG_SERVER_NAME ) ); }
 if( !defined( 'RSHCP_RSM_URL' ) ) 				{ define( 'RSHCP_RSM_URL', 'http://www.redsandmarketing.com/' ); }
 if( !defined( 'RSHCP_HOME_URL' ) ) 				{ define( 'RSHCP_HOME_URL', RSHCP_RSM_URL.'plugins/'.RSHCP_PLUGIN_NAME.'/' ); }
-if( !defined( 'RSHCP_SUPPORT_URL' ) ) 			{ define( 'RSHCP_SUPPORT_URL', RSHCP_RSM_URL.'plugins/wordpress-plugin-support/?plugin='.RSHCP_PLUGIN_NAME.'/' ); }
+if( !defined( 'RSHCP_SUPPORT_URL' ) ) 			{ define( 'RSHCP_SUPPORT_URL', RSHCP_RSM_URL.'plugins/wordpress-plugin-support/?plugin='.RSHCP_PLUGIN_NAME ); }
 if( !defined( 'RSHCP_WP_URL' ) ) 				{ define( 'RSHCP_WP_URL', 'https://wordpress.org/extend/plugins/'.RSHCP_PLUGIN_NAME.'/' ); }
 if( !defined( 'RSHCP_WP_RATING_URL' ) ) 		{ define( 'RSHCP_WP_RATING_URL', 'https://wordpress.org/support/view/plugin-reviews/'.RSHCP_PLUGIN_NAME ); }
 if( !defined( 'RSHCP_DONATE_URL' ) ) 			{ define( 'RSHCP_DONATE_URL', 'http://bit.ly/'.RSHCP_PLUGIN_NAME.'-donate' ); }
@@ -971,7 +971,7 @@ function rshcp_check_version() {
 		/* Make sure not network activated */
 		if( is_plugin_active_for_network( RSHCP_PLUGIN_BASENAME ) ) {
 			deactivate_plugins( RSHCP_PLUGIN_BASENAME, TRUE, TRUE );
-			$notice_text = __( 'Plugin deactivated. RS Head Cleaner Lite is not available for network activation.', RSHCP_PLUGIN_NAME );
+			$notice_text = __( 'Plugin deactivated. RS Head Cleaner is not available for network activation.', RSHCP_PLUGIN_NAME );
 			$new_admin_notice = array( 'style' => 'error', 'notice' => $notice_text );
 			update_option( 'rshcp_admin_notices', $new_admin_notice );
 			add_action( 'network_admin_notices', 'rshcp_admin_notices' );
@@ -998,7 +998,7 @@ function rshcp_check_version() {
 		$rshcp_php_version = RSHCP_PHP_VERSION;
 		if( !empty( $rshcp_php_version ) && version_compare( RSHCP_PHP_VERSION, RSHCP_REQUIRED_PHP_VERSION, '<' ) ) {
 			deactivate_plugins( RSHCP_PLUGIN_BASENAME );
-			$notice_text = sprintf( __( '<p>Plugin deactivated. <strong>Your server is running PHP version %3$s, but RS Head Cleaner Lite requires at least PHP %1$s.</strong> We are no longer supporting PHP 5.2, as it has not been supported by the PHP team <a href=%2$s>since 2011</a>, and there are known security, performance, and compatibility issues.</p><p>The version of PHP running on your server is <em>extremely out of date</em>. You should upgrade your PHP version as soon as possible.</p><p>If you need help with this, please contact your web hosting company and ask them to switch your PHP version to 5.4 or 5.5. Please see the <a href=%4$s>plugin documentation</a> if you have further questions.</p>', RSHCP_PLUGIN_NAME ), RSHCP_REQUIRED_PHP_VERSION, '"http://php.net/archive/2011.php#id2011-08-23-1" target="_blank" rel="external" ', $rshcp_php_version, '"'.RSHCP_HOME_URL.'?src='.RSHCP_VERSION.'-php-notice#rshc_requirements" target="_blank" rel="external" ' ); /* NEEDS TRANSLATION - Added 1.4.0 */
+			$notice_text = sprintf( __( '<p>Plugin deactivated. <strong>Your server is running PHP version %3$s, but RS Head Cleaner requires at least PHP %1$s.</strong> We are no longer supporting PHP 5.2, as it has not been supported by the PHP team <a href=%2$s>since 2011</a>, and there are known security, performance, and compatibility issues.</p><p>The version of PHP running on your server is <em>extremely out of date</em>. You should upgrade your PHP version as soon as possible.</p><p>If you need help with this, please contact your web hosting company and ask them to switch your PHP version to 5.4 or 5.5. Please see the <a href=%4$s>plugin documentation</a> if you have further questions.</p>', RSHCP_PLUGIN_NAME ), RSHCP_REQUIRED_PHP_VERSION, '"http://php.net/archive/2011.php#id2011-08-23-1" target="_blank" rel="external" ', $rshcp_php_version, '"'.RSHCP_HOME_URL.'?src='.RSHCP_VERSION.'-php-notice#rshc_requirements" target="_blank" rel="external" ' ); /* NEEDS TRANSLATION - Added 1.4.0 */
 			$new_admin_notice = array( 'style' => 'error', 'notice' => $notice_text );
 			update_option( 'rshcp_admin_notices', $new_admin_notice );
 			add_action( 'admin_notices', 'rshcp_admin_notices' );
@@ -1043,12 +1043,12 @@ function rshcp_check_nag_notices() {
 	if( empty( $status['currentnag'] ) && ( empty( $status['lastnag'] ) || $status['lastnag'] <= $timenow - 1209600 ) ) {
 		if( empty( $status['vote'] ) && $num_days_inst >= 14 ) { /* TO DO: TRANSLATE */
 			$nid = 'n01'; $style = 'updated';
-			$notice_text = __( 'It looks like you\'ve been using RS Head Cleaner Lite for a while now. That\'s great! :)', RSHCP_PLUGIN_NAME ) .'</p><p>'. __( 'If you find this plugin useful, would you take a moment to give it a rating on WordPress.org?', RSHCP_PLUGIN_NAME ) .'</p><p>'. sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.RSHCP_WP_RATING_URL.'" target="_blank" rel="external" ', __( 'Yes, I\'d like to rate it!', RSHCP_PLUGIN_NAME ) ) .' &mdash; '.  sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.$query_str_con.'" ', __( 'I already did!', RSHCP_PLUGIN_NAME ) );
+			$notice_text = __( 'It looks like you\'ve been using RS Head Cleaner for a while now. That\'s great! :)', RSHCP_PLUGIN_NAME ) .'</p><p>'. __( 'If you find this plugin useful, would you take a moment to give it a rating on WordPress.org?', RSHCP_PLUGIN_NAME ) .'</p><p>'. sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.RSHCP_WP_RATING_URL.'" target="_blank" rel="external" ', __( 'Yes, I\'d like to rate it!', RSHCP_PLUGIN_NAME ) ) .' &mdash; '.  sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.$query_str_con.'" ', __( 'I already did!', RSHCP_PLUGIN_NAME ) );
 			$status['currentnag'] = TRUE; $status['vote'] = FALSE;
 		}
 		elseif( empty( $status['donate'] ) && $num_days_inst >= 90 ) { /* TO DO: TRANSLATE */
 			$nid = 'n02'; $style = 'updated';
-			$notice_text = __( 'You\'ve been using RS Head Cleaner Lite for several months now. We hope that means you like it and are finding it helpful. :)', RSHCP_PLUGIN_NAME ) .'</p><p>'. __( 'RS Head Cleaner Lite is provided for free.', RSHCP_PLUGIN_NAME ) . ' ' . __( 'If you like the plugin, consider a donation to help further its development.', RSHCP_PLUGIN_NAME ) .'</p><p>'. sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.RSHCP_DONATE_URL.'" target="_blank" rel="external" ', __( 'Yes, I\'d like to donate!', RSHCP_PLUGIN_NAME ) ) .' &mdash; '. sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.$query_str_con.'" ', __( 'I already did!', RSHCP_PLUGIN_NAME ) );
+			$notice_text = __( 'You\'ve been using RS Head Cleaner for several months now. We hope that means you like it and are finding it helpful. :)', RSHCP_PLUGIN_NAME ) .'</p><p>'. __( 'RS Head Cleaner is provided for free.', RSHCP_PLUGIN_NAME ) . ' ' . __( 'If you like the plugin, consider a donation to help further its development.', RSHCP_PLUGIN_NAME ) .'</p><p>'. sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.RSHCP_DONATE_URL.'" target="_blank" rel="external" ', __( 'Yes, I\'d like to donate!', RSHCP_PLUGIN_NAME ) ) .' &mdash; '. sprintf( __( '<strong><a href=%1$s>%2$s</a></strong>', RSHCP_PLUGIN_NAME ), '"'.$query_str_con.'" ', __( 'I already did!', RSHCP_PLUGIN_NAME ) );
 			$status['currentnag'] = TRUE; $status['donate'] = FALSE;
 		}
 	}

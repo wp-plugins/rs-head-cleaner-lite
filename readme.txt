@@ -106,6 +106,11 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 
 == Changelog ==
 
+= 1.4.2.1 =
+*released 09/08/15*
+
+* Fixed a couple minor bugs.
+
 = 1.4.2 =
 *released 09/07/15*
 
@@ -215,5 +220,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.4.2 =
-* Added error checking during cache file creation, improved compatibility with certain themes and scripts, and various other code improvements. Please see Changelog for details.
+= 1.4.2.1 =
+* Fixed a couple minor bugs. Please see Changelog for details.
