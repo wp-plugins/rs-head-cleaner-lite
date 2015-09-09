@@ -106,6 +106,13 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 
 == Changelog ==
 
+= 1.4.2.2 =
+*released 09/09/15*
+
+* Compatibility improvements, including improved compatibility with sliders and responsive themes.
+* Made some improvements to the CSS concatenation and minification.
+* Various code improvements.
+
 = 1.4.2.1 =
 *released 09/08/15*
 
@@ -220,5 +227,5 @@ Absolutely...go to my [WordPress Consulting](http://www.redsandmarketing.com/web
 * Initial release.
 
 == Upgrade Notice ==
-= 1.4.2.1 =
-* Fixed a couple minor bugs. Please see Changelog for details.
+= 1.4.2.2 =
+* Compatibility improvements, made improvements to the CSS concatenation and minification, and other various code improvements. Please see Changelog for details.
